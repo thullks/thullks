@@ -774,6 +774,55 @@
     border-radius: 2rem;
   }
 
+
+  /* HAMBURGER MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 600px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0; right: 0;
+      background: rgba(246,239,231,0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 0;
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+      border-bottom: none;
+    }
+    .nav-links a:hover { background: var(--accent-light); }
+  }
+
 </style>
 </head>
 <body>
@@ -781,7 +830,10 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Thulio Falcão</a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#projetos">Projetos</a></li>
     <li><a href="#depoimentos">Depoimentos</a></li>
@@ -1080,6 +1132,25 @@
 
   window.addEventListener('scroll', setActive, { passive: true });
   setActive();
+})();
+</script>
+
+
+<script>
+(function() {
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('navLinks');
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  // Close menu when a link is clicked
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    });
+  });
 })();
 </script>
 
