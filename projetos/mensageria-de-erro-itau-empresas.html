@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-18904C002Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-18904C002Y');
-</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mensageria de erro — Itaú Empresas — Thulio Falcão</title>
@@ -107,7 +100,7 @@
   <a href="../index.html" class="nav-logo">Thulio Falcão</a>
   <a href="../index.html#projetos" class="nav-back">
     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Voltar aos projetos
+    Projetos
   </a>
 </nav>
 
@@ -246,5 +239,52 @@
   sections.forEach(s => spy.observe(s));
 })();
 </script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:999; background:var(--card-bg); border-top:1px solid var(--border); padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; font-family:'DM Sans',sans-serif;">
+  <p style="font-size:0.88rem; color:var(--muted); margin:0; max-width:680px; line-height:1.6;">Você aceita um cookie? Eles me ajudam a entender como você navega pelo site. Não se preocupe: nenhum dado sensível é coletado.</p>
+  <div style="display:flex; gap:1.5rem; align-items:center; flex-shrink:0;">
+    <a href="#" id="cookieAccept" style="font-size:0.88rem; font-weight:700; color:var(--accent); text-decoration:none;">Aceitar</a>
+    <a href="#" id="cookieDecline" style="font-size:0.88rem; font-weight:400; color:var(--muted); text-decoration:none;">Recusar</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var consent = localStorage.getItem('cookieConsent');
+  var banner = document.getElementById('cookieBanner');
+
+  function loadGA() {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-18904C002Y';
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-18904C002Y');
+  }
+
+  if (consent === 'accepted') {
+    loadGA();
+  } else if (consent === null) {
+    banner.style.display = 'flex';
+  }
+
+  document.getElementById('cookieAccept').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.setItem('cookieConsent', 'accepted');
+    banner.style.display = 'none';
+    loadGA();
+  });
+
+  document.getElementById('cookieDecline').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.setItem('cookieConsent', 'declined');
+    banner.style.display = 'none';
+  });
+})();
+</script>
+
 </body>
 </html>
